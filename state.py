@@ -15,3 +15,8 @@ class Planet:
     colonization_mining_level: int = 1
     colonization_shipping_level: int = 1
     colonization_cargo_level: int = 1
+
+
+@dataclass
+class Ore:
+    price: float
