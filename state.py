@@ -1,4 +1,12 @@
 from dataclasses import dataclass, field
+from typing import List, Tuple
+
+
+@dataclass
+class Ore:
+    name: str
+    index: int
+    price: float
 
 
 @dataclass
@@ -12,7 +20,7 @@ class Planet:
     telescope: int
 
     # Mining ratios
-    produce: list
+    produce: List[Tuple[float, Ore]]
 
     # Main upgrades
     mining_level: int = 1
@@ -40,10 +48,3 @@ class Planet:
         level = self.cargo_level
         result = 5 + 2 * (level - 1) + 0.1 * (level - 1) ** 2
         return round(result)
-
-
-@dataclass
-class Ore:
-    name: str
-    index: int
-    price: float
