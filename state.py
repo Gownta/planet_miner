@@ -1,10 +1,18 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass
 class Planet:
     name: str
     purchase_cost: int
+
+    # Location
+    index: int = 0
+    distance: float = 0
+    telescope: int = 0
+
+    # Mining ratios
+    produce: list = field(default_factory=list)
 
     # Main upgrades
     mining_level: int = 1
