@@ -51,25 +51,24 @@ class PLANETS(Enum):
     ZERO = Planet(name="Zero", purchase_cost=100_000_000_000_000_000)
     SOTOMI = Planet(name="Sotomi", purchase_cost=100_000_000_000_000_000)
 
-ORES = [
-    Ore(name="Copper", price=1.80),
-    Ore(name="Iron", price=3.60),
-    Ore(name="Lead", price=5.60),
-    Ore(name="Silica", price=17.60),
-    Ore(name="Aluminium", price=23.80),
-    Ore(name="Silver", price=64.80),
-    Ore(name="Gold", price=105.00),
-    Ore(name="Diamond", price=192.00),
-    Ore(name="Platinium", price=340.00),
-    Ore(name="Titanium", price=730.00),
-    Ore(name="Iridium", price=1_600.00),
-    Ore(name="Paladium", price=3_500.00),
-    Ore(name="Osmium", price=7_800.00),
-    Ore(name="Rhodium", price=17_500.00),
-    Ore(name="Inerton", price=40_000.00),
-    Ore(name="Quadium", price=92_000.00),
-    Ore(name="Scrith", price=215_000.00),
-    Ore(name="Uru", price=510_000.00),
-    Ore(name="Vibranium", price=1_250_000.00),
-    Ore(name="Aether", price=3_200_000.00),
-]
+class ORES(Enum):
+    COPPER = Ore(name="Copper", price=1.80)
+    IRON = Ore(name="Iron", price=3.60)
+    LEAD = Ore(name="Lead", price=5.60)
+    SILICA = Ore(name="Silica", price=17.60)
+    ALUMINIUM = Ore(name="Aluminium", price=23.80)
+    SILVER = Ore(name="Silver", price=64.80)
+    GOLD = Ore(name="Gold", price=105.00)
+    DIAMOND = Ore(name="Diamond", price=192.00)
+    PLATINIUM = Ore(name="Platinium", price=340.00)
+    TITANIUM = Ore(name="Titanium", price=730.00)
+    IRIDIUM = Ore(name="Iridium", price=1_600.00)
+    PALADIUM = Ore(name="Paladium", price=3_500.00)
+    OSMIUM = Ore(name="Osmium", price=7_800.00)
+    RHODIUM = Ore(name="Rhodium", price=17_500.00)
+    INERTON = Ore(name="Inerton", price=40_000.00)
+    QUADIUM = Ore(name="Quadium", price=92_000.00)
+    SCRITH = Ore(name="Scrith", price=215_000.00)
+    URU = Ore(name="Uru", price=510_000.00)
+    VIBRANIUM = Ore(name="Vibranium", price=1_250_000.00)
+    AETHER = Ore(name="Aether", price=3_200_000.00)
