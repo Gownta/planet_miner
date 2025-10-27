@@ -7,12 +7,12 @@ class Planet:
     purchase_cost: int
 
     # Location
-    index: int = 0
-    distance: float = 0
-    telescope: int = 0
+    index: int
+    distance: float
+    telescope: int
 
     # Mining ratios
-    produce: list = field(default_factory=list)
+    produce: list
 
     # Main upgrades
     mining_level: int = 1
