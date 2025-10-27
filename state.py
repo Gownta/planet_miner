@@ -44,4 +44,5 @@ class Planet:
 @dataclass
 class Ore:
     name: str
+    index: int
     price: float
