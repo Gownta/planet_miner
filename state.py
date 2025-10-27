@@ -31,9 +31,10 @@ class Planet:
         level = self.mining_level
         return 0.25 + 0.1 * (level - 1) + 0.017 * (level - 1) ** 2
 
-    def ship_speed(self) -> float:
+    def ship_hz(self) -> float:
         level = self.shipping_level
-        return 1 + 0.2 * (level - 1) + (1 / 75) * (level - 1) ** 2
+        speed = 1 + 0.2 * (level - 1) + (1 / 75) * (level - 1) ** 2
+        return speed / self.distance
 
     def ship_capacity(self) -> int:
         level = self.cargo_level
