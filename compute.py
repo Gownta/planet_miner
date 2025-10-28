@@ -4,9 +4,7 @@ from state import Planet
 def best_shipping_upgrade(shipping_level: int, cargo_level: int) -> str:
     """
     Determine whether to upgrade shipping or cargo for best cost efficiency.
-
-    Returns 'shipping' or 'cargo' based on which upgrade provides the best
-    increase in (ship_hz * ship_capacity) per unit cost.
+    Returns (1, 0) if shipping is better, or (0, 1) for cargo
     """
 
     def rate(shipping_level: int, cargo_level: int) -> float:
@@ -28,9 +26,21 @@ def best_shipping_upgrade(shipping_level: int, cargo_level: int) -> str:
         return (1, 0)
     return (0, 1)
 
-    cargo_cost = Planet.upgrade_cost(1, cargo_level)
-    cargo_bonus = rate(shipping_level, cargo_level + 1)
 
-    if ship_bonus / ship_cost > cargo_bonus / cargo_cost:
-        return (1, 0)
-    return (0, 1)
+def simulate_upgrades():
+    """
+    Starting at (1, 1), iteratively upgrade shipping or cargo based on
+    best_shipping_upgrade for 100 iterations, printing levels each time.
+    """
+    shipping_level = 1
+    cargo_level = 1
+
+    print(f"({shipping_level}, {cargo_level})")
+
+    for _ in range(100):
+        ship_upgrade, cargo_upgrade = best_shipping_upgrade(shipping_level, cargo_level)
+        shipping_level += ship_upgrade
+        cargo_level += cargo_upgrade
+        print(f"({shipping_level}, {cargo_level})")
+
+
