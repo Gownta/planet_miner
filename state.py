@@ -33,6 +33,9 @@ class Planet:
     colonization_shipping_level: int = 1
     colonization_cargo_level: int = 1
 
+    def __post_init__(self):
+        self.produce = sorted(self.produce, key=lambda x: -x[1].index)
+
     def output(self) -> List[Tuple[float, Ore]]:
         """
         Calculate the rate at which ores are shipped off the planet.
@@ -45,23 +48,12 @@ class Planet:
 
         # Calculate production for each ore
         production = [(pct * total_mining_rate, ore) for pct, ore in self.produce]
-
-        # Sort by ore index (descending) to prioritize higher-level ores
-        production_sorted = reversed(production)
-
-        # Allocate shipping capacity
-        shipped = {}
-        remaining_capacity = shipping_capacity
-
-        for rate, ore in production_sorted:
-            shipped_rate = min(rate, remaining_capacity)
-            shipped[ore] = shipped_rate
-            remaining_capacity -= shipped_rate
-
-        # Return sorted by ore index (ascending)
-        result = [(shipped[ore], ore) for _, ore in sorted(self.produce, key=lambda x: x[1].index)]
-
-        return result
+        remaining = shipping_capacity
+        for i in range(len(production)):
+            amt = min(remaining, production[i][0])
+            production[i][0] = amt
+            remaining -= amt
+        return production
 
     def mining_speed(self) -> float:
         level = self.mining_level
@@ -76,3 +68,7 @@ class Planet:
         level = self.cargo_level
         result = 5 + 2 * (level - 1) + 0.1 * (level - 1) ** 2
         return round(result)
+
+    def upgrade_cost(self, level: int) -> float:
+        """Calculate the cost to upgrade from level to level+1."""
+        return (self.purchase_cost / 20) * (1.3 ** (level - 1))
