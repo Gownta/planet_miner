@@ -19,7 +19,8 @@ class Planet:
     distance: float
     telescope: int
 
-    # Mining ratios
+    # Mining ratios. (X, Y) means X% of production is ore Y.
+    # Sorted by ore index, ascending
     produce: List[Tuple[float, Ore]]
 
     # Main upgrades
@@ -32,8 +33,35 @@ class Planet:
     colonization_shipping_level: int = 1
     colonization_cargo_level: int = 1
 
-    def output(self):
-        pass
+    def output(self) -> List[Tuple[float, Ore]]:
+        """
+        Calculate the rate at which ores are shipped off the planet.
+
+        Production is limited by shipping capacity. Higher-level ores
+        (higher index) are prioritized when capacity is insufficient.
+        """
+        total_mining_rate = self.mining_speed()
+        shipping_capacity = self.ship_hz() * self.ship_capacity()
+
+        # Calculate production for each ore
+        production = [(pct * total_mining_rate, ore) for pct, ore in self.produce]
+
+        # Sort by ore index (descending) to prioritize higher-level ores
+        production_sorted = reversed(production)
+
+        # Allocate shipping capacity
+        shipped = {}
+        remaining_capacity = shipping_capacity
+
+        for rate, ore in production_sorted:
+            shipped_rate = min(rate, remaining_capacity)
+            shipped[ore] = shipped_rate
+            remaining_capacity -= shipped_rate
+
+        # Return sorted by ore index (ascending)
+        result = [(shipped[ore], ore) for _, ore in sorted(self.produce, key=lambda x: x[1].index)]
+
+        return result
 
     def mining_speed(self) -> float:
         level = self.mining_level
