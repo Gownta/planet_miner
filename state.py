@@ -43,8 +43,8 @@ class Planet:
         Production is limited by shipping capacity. Higher-level ores
         (higher index) are prioritized when capacity is insufficient.
         """
-        total_mining_rate = self.mining_speed()
-        shipping_capacity = self.ship_hz() * self.ship_capacity()
+        total_mining_rate = Planet.mining_speed(self.mining_level)
+        shipping_capacity = Planet.ship_hz(self.shipping_level, self.distance) * Planet.ship_capacity(self.cargo_level)
 
         # Calculate production for each ore
         production = [(pct * total_mining_rate, ore) for pct, ore in self.produce]
@@ -55,20 +55,21 @@ class Planet:
             remaining -= amt
         return production
 
-    def mining_speed(self) -> float:
-        level = self.mining_level
+    @staticmethod
+    def mining_speed(level: int) -> float:
         return 0.25 + 0.1 * (level - 1) + 0.017 * (level - 1) ** 2
 
-    def ship_hz(self) -> float:
-        level = self.shipping_level
+    @staticmethod
+    def ship_hz(level: int, distance: float) -> float:
         speed = 1 + 0.2 * (level - 1) + (1 / 75) * (level - 1) ** 2
-        return speed / self.distance
+        return speed / distance
 
-    def ship_capacity(self) -> int:
-        level = self.cargo_level
+    @staticmethod
+    def ship_capacity(level: int) -> int:
         result = 5 + 2 * (level - 1) + 0.1 * (level - 1) ** 2
         return round(result)
 
-    def upgrade_cost(self, level: int) -> float:
+    @staticmethod
+    def upgrade_cost(purchase_cost: int, level: int) -> float:
         """Calculate the cost to upgrade from level to level+1."""
-        return (self.purchase_cost / 20) * (1.3 ** (level - 1))
+        return (purchase_cost / 20) * (1.3 ** (level - 1))
