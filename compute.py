@@ -35,12 +35,21 @@ def simulate_upgrades():
     shipping_level = 1
     cargo_level = 1
 
-    print(f"({shipping_level}, {cargo_level})")
+    print(f"{shipping_level - cargo_level:+d} ({shipping_level}, {cargo_level})")
 
-    for _ in range(100):
+    for _ in range(50):
+        # Do two upgrades
         ship_upgrade, cargo_upgrade = best_shipping_upgrade(shipping_level, cargo_level)
         shipping_level += ship_upgrade
         cargo_level += cargo_upgrade
-        print(f"({shipping_level}, {cargo_level})")
 
+        ship_upgrade, cargo_upgrade = best_shipping_upgrade(shipping_level, cargo_level)
+        shipping_level += ship_upgrade
+        cargo_level += cargo_upgrade
+
+        print(f"{shipping_level - cargo_level:+d} ({shipping_level}, {cargo_level})")
+
+
+if __name__ == "__main__":
+    simulate_upgrades()
 
