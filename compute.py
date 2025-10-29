@@ -1,4 +1,5 @@
 from state import Planet
+from data import PLANETS
 
 
 def best_shipping_upgrade(shipping_level: int, cargo_level: int) -> str:
@@ -50,6 +51,24 @@ def simulate_upgrades():
         print(f"{shipping_level - cargo_level:+d} ({shipping_level}, {cargo_level})")
 
 
+def balance_planets(p1: Planet, p2: Planet):
+    """
+    Balance two planets.
+    For now, just prints the two planet names.
+    """
+    print(p1.name, p2.name)
+
+
+def balance_planet_pair(i: int):
+    """
+    Get planets indexed by i and i+1, then pass them to balance_planets.
+    """
+    planets_list = list(PLANETS)
+    p1 = planets_list[i].value
+    p2 = planets_list[i + 1].value
+    balance_planets(p1, p2)
+
+
 if __name__ == "__main__":
-    simulate_upgrades()
+    balance_planet_pair(1)
 
