@@ -117,6 +117,35 @@ def balance_planet_pair(i: int):
     print(f"{p1.name} {p2.name} {min_delta:+d} {max_delta:+d}")
 
 
+def balance_all_planets(n: int):
+    """
+    Call balance_planet_pair for each index from 0 to n.
+    """
+    for i in range(n + 1):
+        balance_planet_pair(i)
+
+
+def balorian(level: int, n: int):
+    """
+    Assumes BALOR (first planet) has mining_level level.
+    For the first n planets, find the mining level where they become
+    more efficient to upgrade than BALOR. Print each planet and level.
+    """
+    planets_list = list(PLANETS)
+    balor = planets_list[0].value
+    balor_efficiency = planet_upgrade_efficiency(balor, level)
+
+    for i in range(n):
+        planet = planets_list[i].value
+
+        # Find the mining level where this planet becomes more efficient than BALOR
+        planet_level = 1
+        while planet_upgrade_efficiency(planet, planet_level) >= balor_efficiency:
+            planet_level += 1
+
+        print(f"{planet.name} {planet_level - 1}")
+
+
 if __name__ == "__main__":
-    balance_planet_pair(1)
+    balorian(34, 25)
 

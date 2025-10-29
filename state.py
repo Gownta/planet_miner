@@ -12,7 +12,7 @@ class Ore:
 @dataclass
 class Planet:
     name: str
-    purchase_cost: int
+    purchase_cost: float
 
     # Location
     index: int
