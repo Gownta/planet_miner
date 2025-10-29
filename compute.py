@@ -95,9 +95,11 @@ def balance_planets(p1: Planet, p2: Planet):
         else:
             p2_mining_level += 1
 
-        # Print the two mining levels with delta
-        delta = p1_mining_level - p2_mining_level
-        print(f"{p1.name} {p2.name} {p1_mining_level} {p2_mining_level} {delta:+d}")
+        # Only print once each planet has been upgraded at least once
+        if p1_mining_level > 10 and p2_mining_level > 10:
+            # Print the two mining levels with delta
+            delta = p1_mining_level - p2_mining_level
+            print(f"{p1.name} {p2.name} {p1_mining_level} {p2_mining_level} {delta:+d}")
 
 
 def balance_planet_pair(i: int):
@@ -111,5 +113,5 @@ def balance_planet_pair(i: int):
 
 
 if __name__ == "__main__":
-    balance_planet_pair(0)
+    balance_planet_pair(1)
 
