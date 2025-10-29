@@ -78,10 +78,26 @@ def planet_upgrade_efficiency(planet: Planet, mining_level: int) -> float:
 
 def balance_planets(p1: Planet, p2: Planet):
     """
-    Balance two planets.
-    For now, just prints the two planet names.
+    Balance two planets by iteratively upgrading the more efficient one.
     """
-    print(p1.name, p2.name)
+    # Start at mining_level 10 for each planet
+    p1_mining_level = 10
+    p2_mining_level = 10
+
+    for _ in range(30):
+        # Determine which planet is more efficient to upgrade
+        p1_efficiency = planet_upgrade_efficiency(p1, p1_mining_level)
+        p2_efficiency = planet_upgrade_efficiency(p2, p2_mining_level)
+
+        # Upgrade the more efficient planet's mining_level
+        if p1_efficiency > p2_efficiency:
+            p1_mining_level += 1
+        else:
+            p2_mining_level += 1
+
+        # Print the two mining levels with delta
+        delta = p1_mining_level - p2_mining_level
+        print(f"{p1.name} {p2.name} {p1_mining_level} {p2_mining_level} {delta:+d}")
 
 
 def balance_planet_pair(i: int):
