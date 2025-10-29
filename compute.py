@@ -51,6 +51,31 @@ def simulate_upgrades():
         print(f"{shipping_level - cargo_level:+d} ({shipping_level}, {cargo_level})")
 
 
+def planet_upgrade_efficiency(planet: Planet, mining_level: int) -> float:
+    """
+    Calculate the efficiency of upgrading a planet's mining level.
+
+    Returns the ratio of production increase to upgrade cost.
+    Production is calculated as produce * mining_speed, ignoring shipping.
+    """
+    cost = Planet.upgrade_cost(planet.purchase_cost, mining_level)
+
+    speed1 = Planet.mining_speed(mining_level)
+    speed2 = Planet.mining_speed(mining_level + 1)
+    speed_delta = speed2 - speed1
+
+    # Calculate weighted average value of production
+    # For each (pct, ore), multiply pct by the ore's price
+    weighted_value = sum(pct * ore.price for pct, ore in planet.produce)
+
+    # Multiply by speed_delta to get the value delta
+    value_delta = weighted_value * speed_delta
+
+    # Divide value delta by cost to get efficiency ratio
+    return value_delta / cost
+
+
+
 def balance_planets(p1: Planet, p2: Planet):
     """
     Balance two planets.
