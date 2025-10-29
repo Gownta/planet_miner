@@ -1,3 +1,4 @@
+import sys
 from state import Planet
 from data import PLANETS
 
@@ -127,25 +128,43 @@ def balance_all_planets(n: int):
 
 def balorian(level: int, n: int):
     """
-    Assumes BALOR (first planet) has mining_level level.
-    For the first n planets, find the mining level where they become
-    more efficient to upgrade than BALOR. Print each planet and level.
+    For BALOR mining levels 1 through level, and for the first n planets,
+    find the mining level where each planet becomes more efficient than BALOR.
+    Output as a matrix where rows are planets and columns are BALOR levels.
     """
     planets_list = list(PLANETS)
     balor = planets_list[0].value
-    balor_efficiency = planet_upgrade_efficiency(balor, level)
 
+    # Print header row with BALOR levels
+    print("Planet", end="")
+    for balor_level in range(1, level + 1):
+        print(f"\t{balor_level}", end="")
+    print()
+
+    # For each planet
     for i in range(n):
         planet = planets_list[i].value
+        print(f"{planet.name}", end="")
 
-        # Find the mining level where this planet becomes more efficient than BALOR
-        planet_level = 1
-        while planet_upgrade_efficiency(planet, planet_level) >= balor_efficiency:
-            planet_level += 1
+        # For each BALOR level
+        for balor_level in range(1, level + 1):
+            balor_efficiency = planet_upgrade_efficiency(balor, balor_level)
 
-        print(f"{planet.name} {planet_level - 1}")
+            # Find the mining level where this planet becomes more efficient than BALOR
+            planet_level = 1
+            while planet_upgrade_efficiency(planet, planet_level) >= balor_efficiency:
+                planet_level += 1
+
+            print(f"\t{planet_level - 1}", end="")
+
+        print()
 
 
 if __name__ == "__main__":
-    balorian(34, 25)
+    if len(sys.argv) < 2:
+        print("Usage: python compute.py <level>")
+        sys.exit(1)
+
+    level = int(sys.argv[1])
+    balorian(level, 25)
 
