@@ -76,15 +76,17 @@ def planet_upgrade_efficiency(planet: Planet, mining_level: int) -> float:
 
 
 
-def balance_planets(p1: Planet, p2: Planet):
+def balance_planets(p1: Planet, p2: Planet) -> tuple[int, int]:
     """
     Balance two planets by iteratively upgrading the more efficient one.
+    Returns the minimum and maximum deltas between iterations 20 and 50.
     """
     # Start at mining_level 10 for each planet
     p1_mining_level = 10
     p2_mining_level = 10
+    deltas = []
 
-    for _ in range(30):
+    for i in range(50):
         # Determine which planet is more efficient to upgrade
         p1_efficiency = planet_upgrade_efficiency(p1, p1_mining_level)
         p2_efficiency = planet_upgrade_efficiency(p2, p2_mining_level)
@@ -95,21 +97,24 @@ def balance_planets(p1: Planet, p2: Planet):
         else:
             p2_mining_level += 1
 
-        # Only print once each planet has been upgraded at least once
-        if p1_mining_level > 10 and p2_mining_level > 10:
-            # Print the two mining levels with delta
+        # Collect deltas between iterations 20 and 50
+        if i >= 20:
             delta = p1_mining_level - p2_mining_level
-            print(f"{p1.name} {p2.name} {p1_mining_level} {p2_mining_level} {delta:+d}")
+            deltas.append(delta)
+
+    return min(deltas), max(deltas)
 
 
 def balance_planet_pair(i: int):
     """
     Get planets indexed by i and i+1, then pass them to balance_planets.
+    Print the planet names and the min-max range of their level differences.
     """
     planets_list = list(PLANETS)
     p1 = planets_list[i].value
     p2 = planets_list[i + 1].value
-    balance_planets(p1, p2)
+    min_delta, max_delta = balance_planets(p1, p2)
+    print(f"{p1.name} {p2.name} {min_delta:+d} {max_delta:+d}")
 
 
 if __name__ == "__main__":
