@@ -70,5 +70,5 @@ def balance_planet_pair(i: int):
 
 
 if __name__ == "__main__":
-    balance_planet_pair(1)
+    balance_planet_pair(0)
 
